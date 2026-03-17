@@ -48,7 +48,7 @@ int main(){
                 break;
             case 4:
                 std::cout << "Enter the number of oldest drivers to display: ";
-                cin >> n;
+                std::cin >> n;
                 getOldest(n);
                 break;
             case 5:
