@@ -1,4 +1,4 @@
-/*Author:       Murphy Jacob
+/*Author:       Murphy Jacob, Todd Jolley
  *Date:         03/17/26
  *Description:  
  *Instructor:   Bhaskar Trivedi*/
@@ -6,6 +6,11 @@
  *Date:         03/19/26
  *Description:  Main entry point for Driver Management System
  *Instructor:   Bhaskar Trivedi*/
+/*TOD LIST:
+Todd: CountyList and DateList implementation
+Atishay: DriverDatabase and Inactive Database implementation
+Murphy: Final Report and HashTable implementation
+*/
  #include <iostream>
  #include <string>
  #include <sstream>
@@ -54,6 +59,11 @@ int main(){
                 int n;
                 std::cout << "Enter the number of most recent drivers to display: ";
                 std::cin >> n;
+                while(!std::cin >> n) {
+                    std::cin.clear();
+                    std::cin.ignore(1000, '\n');
+                    std::cout << "Invalid input. Please enter a valid integer: ";
+                }
                 getMostRecent(n);
                 break;
             case 4:
