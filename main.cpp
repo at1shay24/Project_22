@@ -2,7 +2,10 @@
  *Date:         03/17/26
  *Description:  
  *Instructor:   Bhaskar Trivedi*/
-
+/*Author:       Atishay Jain
+ *Date:         03/19/26
+ *Description:  Main entry point for Driver Management System
+ *Instructor:   Bhaskar Trivedi*/
  #include <iostream>
  #include <string>
  #include <sstream>
@@ -11,6 +14,11 @@
  #include "Date.h"
  #include "Address.h"
  #include "Vector.h"
+#include "Ticket.h"
+#include "DriverNode.h"
+#include "Government.h"
+#include "Student.h"
+#include "DriverDatabase.h"
  //TODO Include headers for Driver, DriverNode, DateList, CountyList, HashTable, DriverDatabase, etc.
  //TODO Declare global DriverDatabase object
 
@@ -30,9 +38,11 @@ int main(){
     int choice = 0;
     do{
         showMenu();
-        std::cin >> choice;
-        std::cin.ignore(); // Ignore the newline character after the choice input
-
+       if (!(std::cin >> choice)) {
+            std::cin.clear();
+            std::cin.ignore(1000, '\n');
+            continue;
+        }
         switch(choice){
             case 1:
                 addDriver();
@@ -61,7 +71,15 @@ int main(){
     return 0;
 }
 
-void showMenu(){}
+void showMenu(){
+    std::cout << "\n--- City Driver Database Menu ---" << std::endl;
+    std::cout << "1. Add New Driver Record" << std::endl;
+    std::cout << "2. Remove/Migrate Driver" << std::endl;
+    std::cout << "3. View N Most Recent Licenses" << std::endl;
+    std::cout << "4. View N Oldest Licenses" << std::endl;
+    std::cout << "5. Exit System" << std::endl;
+    std::cout << "Selection: ";
+}
 
 void loadFromFile(const std::string &filename){
     std::ifstream file(filename);
