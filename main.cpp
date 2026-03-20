@@ -38,10 +38,10 @@ int main(){
     int choice = 0;
     do{
         showMenu();
-       if (!(std::cin >> choice)) {
+        while(!(std::cin >> choice)) {
             std::cin.clear();
             std::cin.ignore(1000, '\n');
-            continue;
+            std::cout << "Invalid input. Please enter a choice between 1 and 5: ";
         }
         switch(choice){
             case 1:
