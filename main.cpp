@@ -1,12 +1,11 @@
-/*Author:       Murphy Jacob, Todd Jolley
+/*Author:       Murphy Jacob, Atishay Jain, Todd Jolley
  *Date:         03/17/26
  *Description:  
- *Instructor:   Bhaskar Trivedi*/
-/*Author:       Atishay Jain
+ *Instructor:   Bhaskar Trivedi
  *Date:         03/19/26
  *Description:  Main entry point for Driver Management System
  *Instructor:   Bhaskar Trivedi*/
-/*TOD LIST:
+/*TODO LIST:
 Todd: CountyList and DateList implementation
 Atishay: DriverDatabase and Inactive Database implementation
 Murphy: Final Report and HashTable implementation
