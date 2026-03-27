@@ -4,6 +4,7 @@
 #include "DriverNode.h"
 #include "Vector.h"
 #include <iostream>
+#include <string>
 
 class DriverDatabase {
 private:
@@ -13,6 +14,7 @@ private:
 
 public:
     DriverDatabase() : head(nullptr), tail(nullptr), totalDrivers(0) {}
+    
     ~DriverDatabase() {
         DriverNode* curr = head;
         while (curr) {
@@ -22,6 +24,7 @@ public:
             curr = next;
         }
     }
+
     void addDriver(Driver* newDriver) {
         DriverNode* newNode = new DriverNode(newDriver);
         
@@ -50,6 +53,34 @@ public:
         }
         totalDrivers++;
     }
+
+    Driver* removeByName(std::string name) {
+        DriverNode* curr = head;
+        while (curr) {
+            if (curr->driver->getName() == name) {
+                Driver* foundDriver = curr->driver;
+
+                if (curr->date_prev) {
+                    curr->date_prev->date_next = curr->date_next;
+                } else {
+                    head = curr->date_next;
+                }
+
+                if (curr->date_next) {
+                    curr->date_next->date_prev = curr->date_prev;
+                } else {
+                    tail = curr->date_prev;
+                }
+
+                delete curr;
+                totalDrivers--;
+                return foundDriver;
+            }
+            curr = curr->date_next;
+        }
+        return nullptr;
+    }
+
     void displayRecent(int n) {
         DriverNode* curr = tail;
         int count = 0;
@@ -60,6 +91,7 @@ public:
             count++;
         }
     }
+
     void displayOldest(int n) {
         DriverNode* curr = head;
         int count = 0;
@@ -70,6 +102,8 @@ public:
             count++;
         }
     }
+
     int size() const { return totalDrivers; }
 };
+
 #endif
