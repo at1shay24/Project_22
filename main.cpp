@@ -7,8 +7,6 @@
  *Instructor:   Bhaskar Trivedi*/
 /*TODO LIST:
 Todd: CountyList and DateList implementation
-Atishay: DriverDatabase and Inactive Database implementation
-Murphy: Final Report and HashTable implementation
 */
  #include <iostream>
  #include <string>
