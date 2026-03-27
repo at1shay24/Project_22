@@ -2,6 +2,8 @@
 #define DRIVER_DATABASE_H
 
 #include "DriverNode.h"
+#include "HashTable.h"
+#include "InactiveDatabase.h"
 #include "Vector.h"
 #include <iostream>
 #include <string>
