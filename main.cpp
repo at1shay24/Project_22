@@ -22,9 +22,11 @@ Murphy: Final Report and HashTable implementation
 #include "DriverNode.h"
 #include "Government.h"
 #include "Student.h"
-//#include "DriverDatabase.h".   not being used rn
- //TODO Include headers for Driver, DriverNode, DateList, CountyList, HashTable, DriverDatabase, etc.
- //TODO Declare global DriverDatabase object
+#include "DriverDatabase.h"
+#include "InactiveDatabase.h"
+
+ DriverDatabase activeDB;
+ InactiveDatabase inactiveDB;
 
  void loadFromFile(const std::string &filename);
  void showMenu();
@@ -36,16 +38,16 @@ Murphy: Final Report and HashTable implementation
 
 int main(){
     std::cout << "-== Driver Database ==-" << std::endl;
-    //TODO Create DriverDatabase and load data from file
     loadFromFile("drivers.dat");
 
     int choice = 0;
     do{
         showMenu();
-        while(!(std::cin >> choice)) {
+        if(!(std::cin >> choice)) {
             std::cin.clear();
             std::cin.ignore(1000, '\n');
             std::cout << "Invalid input. Please enter a choice between 1 and 5: ";
+            continue;
         }
         switch(choice){
             case 1:
@@ -54,22 +56,28 @@ int main(){
             case 2:
                 removeDriver();
                 break;
-            case 3:
+            case 3: {
                 int n;
                 std::cout << "Enter the number of most recent drivers to display: ";
-                std::cin >> n;
-                while(!std::cin >> n) {
+                if(!(std::cin >> n)) {
                     std::cin.clear();
                     std::cin.ignore(1000, '\n');
-                    std::cout << "Invalid input. Please enter a valid integer: ";
+                } else {
+                    getMostRecent(n);
                 }
-                getMostRecent(n);
                 break;
-            case 4:
+            }
+            case 4: {
+                int n;
                 std::cout << "Enter the number of oldest drivers to display: ";
-                std::cin >> n;
-                getOldest(n);
+                if(!(std::cin >> n)) {
+                    std::cin.clear();
+                    std::cin.ignore(1000, '\n');
+                } else {
+                    getOldest(n);
+                }
                 break;
+            }
             case 5:
                 exitProgram();
                 break;
@@ -100,7 +108,23 @@ void loadFromFile(const std::string &filename){
     std::string line;
     int count = 0;
     while(std::getline(file, line) && count < 100){
-        //TODO: Parse the line and create driver objects and insert into DriverDatabase
+        std::stringstream ss(line);
+        std::string name, sDay, sMonth, sYear, lDay, lMonth, lYear, street, city, county, zip, type;
+        std::getline(ss, name, ',');
+        std::getline(ss, sDay, ','); std::getline(ss, sMonth, ','); std::getline(ss, sYear, ',');
+        std::getline(ss, lDay, ','); std::getline(ss, lMonth, ','); std::getline(ss, lYear, ',');
+        std::getline(ss, street, ','); std::getline(ss, city, ','); std::getline(ss, county, ','); std::getline(ss, zip, ',');
+        std::getline(ss, type, ',');
+
+        Driver* d = nullptr;
+        Date dob(std::stoi(sDay), std::stoi(sMonth), std::stoi(sYear));
+        Date lic(std::stoi(lDay), std::stoi(lMonth), std::stoi(lYear));
+        Address addr(street, city, county, zip);
+
+        if(type == "Student") d = new Student(name, dob, lic, addr, addr, FIT);
+        else d = new Government(name, dob, lic, addr, addr, FIT);
+        
+        activeDB.addDriver(d);
         count++;
     }
     file.close();
@@ -108,27 +132,54 @@ void loadFromFile(const std::string &filename){
 }
 
 void addDriver(){
+    std::string name, street, city, county, zip;
+    int d, m, y, ld, lm, ly, typeChoice;
+    
     std::cout << "--- Adding a New Driver ---" << std::endl;
-    //TODO: Prompt for driver details and ask for an insertion point and refID if needed
-    //Call DriverDatabase.addDriver(driver)
+    std::cin.ignore();
+    std::cout << "Name: "; std::getline(std::cin, name);
+    std::cout << "DOB (D M Y): "; std::cin >> d >> m >> y;
+    std::cout << "License Date (D M Y): "; std::cin >> ld >> lm >> ly;
+    std::cin.ignore();
+    std::cout << "Street: "; std::getline(std::cin, street);
+    std::cout << "City: "; std::getline(std::cin, city);
+    std::cout << "County: "; std::getline(std::cin, county);
+    std::cout << "Zip: "; std::getline(std::cin, zip);
+    std::cout << "Type (1. Student, 2. Govt): "; std::cin >> typeChoice;
+
+    Driver* newDriver = nullptr;
+    if(typeChoice == 1) newDriver = new Student(name, Date(d,m,y), Date(ld,lm,ly), Address(street, city, county, zip), Address(), FIT);
+    else newDriver = new Government(name, Date(d,m,y), Date(ld,lm,ly), Address(street, city, county, zip), Address(), FIT);
+
+    activeDB.addDriver(newDriver);
 }
 
 void removeDriver(){
+    std::string name;
     std::cout << "--- Removing a Driver ---" << std::endl;
-    //Prompt for a license number and call DriverDatabase.removeDriver(driverID)
+    std::cout << "Enter Name: ";
+    std::cin.ignore();
+    std::getline(std::cin, name);
+    
+    Driver* found = activeDB.removeByName(name);
+    if(found) {
+        inactiveDB.addInactive(found);
+        std::cout << "Driver moved to inactive database." << std::endl;
+    } else {
+        std::cout << "Driver not found." << std::endl;
+    }
 }
 
 void getMostRecent(int n){
     std::cout << "Displaying the " << n << " most recent drivers:" << std::endl;
-    //TODO Call DriverDatabase.getMostRecentLicenses(n) and display the results
+    activeDB.displayRecent(n);
 }
 
 void getOldest(int n){
     std::cout << "Displaying the " << n << " oldest drivers:" << std::endl;
-    //TODO: Call DriverDatabase.getOldestLicenses(n) and display the results
+    activeDB.displayOldest(n);
 }
 
 void exitProgram(){
     std::cout << "Exiting the Database. Thank You and Goodbye!" << std::endl;
-    //TODO: Any cleanup (Destructors should handle it)
 }
