@@ -21,6 +21,7 @@ Murphy: Final Report and HashTable implementation
 #include "Ticket.h"
 #include "DriverNode.h"
 #include "Government.h"
+#include "SelfEmployed.h"
 #include "Student.h"
 #include "DriverDatabase.h"
 #include "InactiveDatabase.h"
@@ -109,20 +110,36 @@ void loadFromFile(const std::string &filename){
     int count = 0;
     while(std::getline(file, line) && count < 100){
         std::stringstream ss(line);
-        std::string name, sDay, sMonth, sYear, lDay, lMonth, lYear, street, city, county, zip, type;
-        std::getline(ss, name, ',');
+        std::string name, sDay, sMonth, sYear, lDay, lMonth, lYear, street, city, county, zip, type, medStr;
+         std::getline(ss, name, ',');
         std::getline(ss, sDay, ','); std::getline(ss, sMonth, ','); std::getline(ss, sYear, ',');
         std::getline(ss, lDay, ','); std::getline(ss, lMonth, ','); std::getline(ss, lYear, ',');
         std::getline(ss, street, ','); std::getline(ss, city, ','); std::getline(ss, county, ','); std::getline(ss, zip, ',');
         std::getline(ss, type, ',');
+        std::getline(ss, medStr, ',');  // medical condition as string
+
+        int medInt = std::stoi(medStr);
+        MedicalCondition med;
+        switch(medInt){
+            case 0: med = FIT; break;
+            case 1: med = VISION_IMPAIRED; break;
+            case 2: med = UPPER_EXTREMITY; break;
+            case 3: med = LOCOMOTOR; break;
+            default: med = FIT;
+        }
 
         Driver* d = nullptr;
         Date dob(std::stoi(sDay), std::stoi(sMonth), std::stoi(sYear));
         Date lic(std::stoi(lDay), std::stoi(lMonth), std::stoi(lYear));
         Address addr(street, city, county, zip);
 
-        if(type == "Student") d = new Student(name, dob, lic, addr, addr, FIT);
-        else d = new Government(name, dob, lic, addr, addr, FIT);
+        if(type == "Student") 
+            d = new Student(name, dob, lic, addr, addr, med);
+        else if(type == "Government")
+            d = new Government(name, dob, lic, addr, addr, med);
+        else if(type == "SelfEmployed")
+            d = new SelfEmployed(name, dob, lic, addr, addr, med);
+        // Add other types as needed (BusinessOwner, PrivateSector)
         
         activeDB.addDriver(d);
         count++;
