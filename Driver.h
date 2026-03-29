@@ -12,6 +12,7 @@ using namespace std;
 enum MedicalCondition { FIT, VISION_IMPAIRED, UPPER_EXTREMITY, LOCOMOTOR };
 class Driver {
 protected:
+    string id;
     string name; 
     Date dob; 
     Date licenseDate; 

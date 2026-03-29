@@ -18,6 +18,8 @@ Todd: CountyList and DateList implementation
 #include "Student.h"
 #include "Ticket.h"
 #include "Vector.h"
+#include "BusinessOwner.h"
+#include "PrivateSector.h"
 #include <iostream>
 #include <sstream>
 #include <fstream>
@@ -147,7 +149,10 @@ void loadFromFile(const string &filename){
             d = new Government(name, dob, lic, addr, addr, med);
         else if(type == "SelfEmployed")
             d = new SelfEmployed(name, dob, lic, addr, addr, med);
-        // Add other types as needed (BusinessOwner, PrivateSector)
+        else if(type == "BusinessOwner")
+            d = new BusinessOwner(name, dob, lic, addr, addr, med);
+        else if(type == "PrivateSector")
+            d = new PrivateSector(name, dob, lic, addr, addr, med);
         
         activeDB.addDriver(d);
         count++;
@@ -170,13 +175,16 @@ void addDriver(){
     std::cout << "City: "; std::getline(std::cin, city);
     std::cout << "County: "; std::getline(std::cin, county);
     std::cout << "Zip: "; std::getline(std::cin, zip);
-    std::cout << "Type (1. Student, 2. Govt): "; std::cin >> typeChoice;
+    std::cout << "Type (1. Student, 2. Government, 3. SelfEmployed, 4. BusinessOwner, 5. PrivateSector): ";
+    std::cin >> typeChoice;
 
     Driver* newDriver = nullptr;
-    Address addr(street, city, county, zip);
     if(typeChoice == 1) newDriver = new Student(name, Date(d,m,y), Date(ld,lm,ly), Address(street, city, county, zip), Address(), FIT);
-    else newDriver = new Government(name, Date(d,m,y), Date(ld,lm,ly), Address(street, city, county, zip), Address(), FIT);
-
+    else if(typeChoice == 2) newDriver = new Government(name, Date(d,m,y), Date(ld,lm,ly), Address(street, city, county, zip), Address(), FIT);
+    else if(typeChoice == 3) newDriver = new SelfEmployed(name, Date(d,m,y), Date(ld,lm,ly), Address(street, city, county, zip), Address(), FIT);
+    else if(typeChoice == 4) newDriver = new BusinessOwner(name, Date(d,m,y), Date(ld,lm,ly), Address(street, city, county, zip), Address(), FIT);
+    else newDriver = new PrivateSector(name, Date(d,m,y), Date(ld,lm,ly), Address(street, city, county, zip), Address(), FIT);
+    
     activeDB.addDriver(newDriver);
 }
 

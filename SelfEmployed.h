@@ -1,12 +1,14 @@
 #ifndef SELF_EMPLOYED_H
 #define SELF_EMPLOYED_H
 #include "Driver.h"
-#include <string>
 
 class SelfEmployed : public Driver {
+private:
+    static int count;
 public:
     SelfEmployed(const string& n, Date dob, Date lic, Address addr, Address work, MedicalCondition med)
-        : Driver("SE", n, dob, lic, addr, work, med) {}
+        : Driver("SE" + to_string(++count), n, dob, lic, addr, work, med) {}
     string getEmploymentType() const override { return "SelfEmployed"; }
 };
+int SelfEmployed::count = 0;
 #endif
