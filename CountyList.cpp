@@ -1,4 +1,4 @@
-#include "CountyList.h"
+#include "countylist.h"
 
 //Constructor
 CountyList::CountyList() : head(nullptr), tail(nullptr){}
