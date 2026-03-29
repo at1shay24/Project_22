@@ -4,6 +4,7 @@
 #include <ctime>
 #include <stdexcept>
 #include <string>
+using namespace std;
 
 Date::Date(int d, int m, int y) : day(d), month(m), year(y) {}
 
@@ -68,7 +69,7 @@ bool Date::setYear(int y) {
     return true;
 }
 
-std::string Date::toString() const {
+string Date::toString() const {
     std::ostringstream oss;
     oss << std::setfill('0') << std::setw(2) << month << "/" << std::setw(2) << day << "/" << std::setw(4) << year;
     return oss.str();

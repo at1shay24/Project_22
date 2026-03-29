@@ -2,6 +2,7 @@
 #define DATE_H
 
 #include <string>
+using namespace std;
 
 class Date{
     private:
