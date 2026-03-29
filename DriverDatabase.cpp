@@ -119,7 +119,7 @@ void DriverDatabase::displayOldest(int n) const{
     int count = 0;
     while(curr && count < n){
         std::cout << curr->driver->getName() << " | License: " << 
-        curr->driver->getID() << std::endl;
+        curr->driver->getName() << std::endl;
         curr = curr->date_next;
         count++;
     }
