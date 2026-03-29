@@ -7,6 +7,8 @@
 #include "Vector.h" 
 #include <string>
 
+using namespace std;
+
 enum MedicalCondition { FIT, VISION_IMPAIRED, UPPER_EXTREMITY, LOCOMOTOR };
 class Driver {
 protected:
@@ -33,7 +35,6 @@ public:
     Date getLicenseDate() const{return licenseDate;}
     Address getAddress() const{return address;}
     virtual string getEmploymentType() const = 0;
-    string getName() const { return name; }
 
 };
 #endif

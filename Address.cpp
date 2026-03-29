@@ -1,4 +1,6 @@
 #include "Address.h"
+#include <string>
+using namespace std;
 
 //Constructor
 Address::Address(const string &str, const string &city,

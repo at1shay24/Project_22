@@ -68,7 +68,7 @@ bool Date::setYear(int y) {
     return true;
 }
 
-string Date::toString() const {
+std::string Date::toString() const {
     std::ostringstream oss;
     oss << std::setfill('0') << std::setw(2) << month << "/" << std::setw(2) << day << "/" << std::setw(4) << year;
     return oss.str();
