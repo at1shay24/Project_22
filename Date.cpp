@@ -1,8 +1,8 @@
 #include "Date.h"
-#include <sstream>
-#include <iomanip>
 #include <ctime>
+#include <iomanip>
 #include <stdexcept>
+#include <sstream>
 #include <string>
 using namespace std;
 
@@ -38,7 +38,7 @@ int Date::getYear() const {return year;}
 
 bool Date::setDay(int d) {
     if(d < 1 || d > 31) {
-        throw std::invalid_argument("Day must be between 1 and 31");
+        throw invalid_argument("Day must be between 1 and 31");
         return false;
     }
     day = d;
@@ -46,7 +46,7 @@ bool Date::setDay(int d) {
 }
 bool Date::setMonth(int m) {
     if(m < 1 || m > 12) {
-        throw std::invalid_argument("Month must be between 1 and 12");
+        throw invalid_argument("Month must be between 1 and 12");
         return false;
     }
     month = m;
@@ -62,7 +62,7 @@ int Date::getCurrentYear() {
 bool Date::setYear(int y) {
     int currentYear = getCurrentYear();
     if(y < 1900 || y > currentYear + 100) {
-        throw std::invalid_argument("Year must be between 1900 and " + std::to_string(currentYear + 100));
+        throw invalid_argument("Year must be between 1900 and " + std::to_string(currentYear + 100));
         return false;
     }
     year = y;
@@ -73,4 +73,9 @@ string Date::toString() const {
     std::ostringstream oss;
     oss << std::setfill('0') << std::setw(2) << month << "/" << std::setw(2) << day << "/" << std::setw(4) << year;
     return oss.str();
+}
+
+ostream &operator<<(ostream &os, const Date &d){
+    os << d.toString();
+    return os;
 }

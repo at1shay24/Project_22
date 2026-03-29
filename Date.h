@@ -1,6 +1,7 @@
 #ifndef DATE_H
 #define DATE_H
 
+#include <ostream>
 #include <string>
 using namespace std;
 
@@ -42,5 +43,8 @@ class Date{
         static int getCurrentYear();
         bool setYear(int y);
         string toString() const;
+
+        //Stream Insertion Operator
+        friend ostream &operator<<(ostream &os, const Date &d);
 };
 #endif

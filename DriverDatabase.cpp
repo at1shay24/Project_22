@@ -102,8 +102,7 @@ void DriverDatabase::displayRecent(int n) const{
     DriverNode* curr = dateList.getTail();
     int count = 0;
     while(curr && count < n){
-        std::cout << curr->driver->getName() << " | License: " << 
-        curr->driver->getName() << std::endl;
+        std::cout << curr->driver->getName() << " | License: " << curr->driver->getLicenseDate() << std::endl;
         curr = curr->date_prev;
         count++;
     }
@@ -118,8 +117,7 @@ void DriverDatabase::displayOldest(int n) const{
     DriverNode* curr = dateList.getHead();
     int count = 0;
     while(curr && count < n){
-        std::cout << curr->driver->getName() << " | License: " << 
-        curr->driver->getName() << std::endl;
+        std::cout << curr->driver->getName() << " | License: " << curr->driver->getLicenseDate() << std::endl;
         curr = curr->date_next;
         count++;
     }
