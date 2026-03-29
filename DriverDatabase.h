@@ -23,7 +23,7 @@ class DriverDatabase {
         //Destructor
         ~DriverDatabase();
         //Insertion
-        void addDriver(Driver* d, const string& position, const string& refID = "");
+        void addDriver(Driver* d, const string& position = "end", const string& refID = "");
         //Removal
         bool removeByName(const string& driverID);
         //Display

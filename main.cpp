@@ -23,7 +23,7 @@ Todd: CountyList and DateList implementation
 #include <fstream>
 
  DriverDatabase activeDB;
- InactiveDatabase inactiveDB;
+
 
  void loadFromFile(const std::string &filename);
  void showMenu();
@@ -171,6 +171,7 @@ void addDriver(){
     std::cout << "Type (1. Student, 2. Govt): "; std::cin >> typeChoice;
 
     Driver* newDriver = nullptr;
+    Address addr(street, city, county, zip);
     if(typeChoice == 1) newDriver = new Student(name, Date(d,m,y), Date(ld,lm,ly), Address(street, city, county, zip), Address(), FIT);
     else newDriver = new Government(name, Date(d,m,y), Date(ld,lm,ly), Address(street, city, county, zip), Address(), FIT);
 
@@ -184,12 +185,11 @@ void removeDriver(){
     std::cin.ignore();
     std::getline(std::cin, name);
     
-    Driver* found = activeDB.removeByName(name);
-    if(found) {
-        inactiveDB.addInactive(found);
-        std::cout << "Driver moved to inactive database." << std::endl;
+   bool removed = activeDB.removeByName(name);
+    if(removed) {
+    std::cout << "Driver moved to inactive database." << std::endl;
     } else {
-        std::cout << "Driver not found." << std::endl;
+    std::cout << "Driver not found." << std::endl;
     }
 }
 
