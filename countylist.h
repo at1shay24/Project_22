@@ -15,12 +15,11 @@ public:
 	~CountyList(){}
 	
 	//Insertion
-	void insertAtHead(DriverNode* county) {}
-	void insertAtTail(DriverNode* county) {}
-	void insertAfter(DriverNode* refNode, DriverNode* newNode) {}
-
+	void insertAtHead(DriverNode* county);
+void insertAtTail(DriverNode* county);
+void insertAfter(DriverNode* refNode, DriverNode* newNode);
 	//Removal
-	void remove(DriverNode* node) {}
+void remove(DriverNode* node);
 
 	//Utility
 	bool isEmpty() const;
