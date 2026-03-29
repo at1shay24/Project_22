@@ -108,52 +108,67 @@ void loadFromFile(const string &filename){
 
     string line;
     int count = 0;
-    while(getline(file, line) && count <= 100){
+    while(getline(file, line) && count < 100){
+        if(line.empty()) continue;
+
         stringstream ss(line);
-        string name, sDay, sMonth, sYear, lDay, lMonth, lYear, street, city, county, zip, type, medStr;
+
+        //Name
+        string name;
         getline(ss, name, ',');
+
+        //Date of Birth (d,m,yyyy)
+        string sDay, sMonth, sYear;
         getline(ss, sDay, ','); getline(ss, sMonth, ','); getline(ss, sYear, ',');
+
+        //License Issue Date (d,m,yyyy)
+        string lDay, lMonth, lYear;
         getline(ss, lDay, ','); getline(ss, lMonth, ','); getline(ss, lYear, ',');
-        getline(ss, street, ','); getline(ss, city, ','); getline(ss, county, ','); std::getline(ss, zip, ',');
+
+        //Home Address
+        string hStreet, hCity, hCounty, hZip;
+        getline(ss, hStreet, ','); getline(ss, hCity, ',');
+        getline(ss, hCounty, ','); getline(ss, hZip, ',');
+
+        //Work Address
+        string wStreet, wCity, wCounty, wZip;
+        getline(ss, wStreet, ','); getline(ss, wCity, ',');
+        getline(ss, wCounty, ','); getline(ss, wZip, ',');
+
+        //Driver Type and Medical Condition
+        string type, medStr;
         getline(ss, type, ',');
-        getline(ss, medStr, ',');  // medical condition as string
+        getline(ss, medStr, ',');
+
+        // Skip malformed lines
+        if(name.empty() || type.empty() || medStr.empty()) continue;
 
         int medInt = stoi(medStr);
         MedicalCondition med;
         switch(medInt){
-            case 0: 
-                med = FIT; 
-                break;
-            case 1: 
-                med = VISION_IMPAIRED; 
-                break;
-            case 2: 
-                med = UPPER_EXTREMITY; 
-                break;
-            case 3: 
-                med = LOCOMOTOR; 
-                break;
-            default: 
-                med = FIT;
-                break;
+            case 0:  med = FIT;              break;
+            case 1:  med = VISION_IMPAIRED;  break;
+            case 2:  med = UPPER_EXTREMITY;  break;
+            case 3:  med = LOCOMOTOR;        break;
+            default: med = FIT;              break;
         }
 
-        Driver* d = nullptr;
-        Date dob(std::stoi(sDay), std::stoi(sMonth), std::stoi(sYear));
-        Date lic(std::stoi(lDay), std::stoi(lMonth), std::stoi(lYear));
-        Address addr(street, city, county, zip);
+        Date    dob(stoi(sDay),  stoi(sMonth),  stoi(sYear));
+        Date    lic(stoi(lDay),  stoi(lMonth),  stoi(lYear));
+        Address homeAddr(hStreet, hCity, hCounty, hZip);
+        Address workAddr(wStreet, wCity, wCounty, wZip);
 
-        if(type == "Student") 
-            d = new Student(name, dob, lic, addr, addr, med);
-        else if(type == "Government")
-            d = new Government(name, dob, lic, addr, addr, med);
-        else if(type == "SelfEmployed")
-            d = new SelfEmployed(name, dob, lic, addr, addr, med);
-        else if(type == "BusinessOwner")
-            d = new BusinessOwner(name, dob, lic, addr, addr, med);
-        else if(type == "PrivateSector")
-            d = new PrivateSector(name, dob, lic, addr, addr, med);
-        
+        Driver* d = nullptr;
+        if     (type == "Student")      d = new Student     (name, dob, lic, homeAddr, workAddr, med);
+        else if(type == "Government")   d = new Government  (name, dob, lic, homeAddr, workAddr, med);
+        else if(type == "SelfEmployed") d = new SelfEmployed(name, dob, lic, homeAddr, workAddr, med);
+        else if(type == "BusinessOwner")d = new BusinessOwner(name, dob, lic, homeAddr, workAddr, med);
+        else if(type == "PrivateSector")d = new PrivateSector(name, dob, lic, homeAddr, workAddr, med);
+        else{
+            cerr << "Unknown driver type \"" << type << "\" on line " << (count + 1) << " — skipping." << endl;
+            continue;
+        }
+
         activeDB.addDriver(d);
         count++;
     }
@@ -175,7 +190,7 @@ void addDriver(){
     std::cout << "City: "; std::getline(std::cin, city);
     std::cout << "County: "; std::getline(std::cin, county);
     std::cout << "Zip: "; std::getline(std::cin, zip);
-    std::cout << "Type (1. Student, 2. Government, 3. SelfEmployed, 4. BusinessOwner, 5. PrivateSector): ";
+    std::cout << "Type (1. Student, 2. Government, 3. Self Employed, 4. Business Owner, 5. Private Sector): ";
     std::cin >> typeChoice;
 
     Driver* newDriver = nullptr;
