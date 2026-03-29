@@ -34,8 +34,8 @@ void DateList::insertSorted(DriverNode* node){
 
     //Case if new node is newest
     if(!(newDate < tail->driver->getLicenseDate())){
-        node->date_next = head;
-        node->date_prev = nullptr;
+        node->date_next = nullptr;
+        node->date_prev = tail;
         tail->date_next = node;
         tail = node;
         return;

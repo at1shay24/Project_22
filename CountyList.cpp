@@ -1,5 +1,4 @@
 #include "CountyList.h"
-#include <iostream>
 
 //Constructor
 CountyList::CountyList() : head(nullptr), tail(nullptr){}
