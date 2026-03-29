@@ -1,4 +1,4 @@
-/*Author:       Murphy Jacob, Atishay Jain, Todd Jolley
+/*Author:       Murphy Jacob, Atishay Jain
  *Date:         03/17/26
  *Description:  
  *Instructor:   Bhaskar Trivedi
