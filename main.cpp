@@ -30,7 +30,7 @@ using namespace std;
 
  void loadFromFile(const std::string &filename);
  void showMenu();
- void addDriver();2
+ void addDriver();
  void removeDriver();
  void getMostRecent(int n);
  void getOldest(int n);

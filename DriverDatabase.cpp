@@ -44,12 +44,12 @@ void DriverDatabase::addDriver(Driver* d, const string& position, const string& 
         DriverNode** refNodePtr = idMap.find(refID);
         if(refNodePtr && *refNodePtr){clist->insertAfter(*refNodePtr, newNode);}
         else{
-            cerr << "Reference driver not found. Inserting at tail." << endl;
+            std::cerr << "Reference driver not found. Inserting at tail." << std::endl;
             clist->insertAtTail(newNode);
         }
     }
     else{
-        cerr << "Invalid position. Inserting at tail." << endl;
+        std::cerr << "Invalid position. Inserting at tail." << std::endl;
         clist->insertAtTail(newNode);
     }
 
@@ -63,7 +63,7 @@ bool DriverDatabase::removeByName(const string& driverID){
     //Find by ID
     DriverNode** nodePtr = idMap.find(driverID);
     if(!nodePtr || !*nodePtr){
-        cerr << "Driver ID not found." << endl;
+        std::cerr << "Driver ID not found." << std::endl;
         return false;
     }
     DriverNode* node = *nodePtr;
@@ -95,15 +95,15 @@ bool DriverDatabase::removeByName(const string& driverID){
 //Display
 void DriverDatabase::displayRecent(int n) const{
     if(dateList.isEmpty()){
-        cout << "No drivers in database." << endl;
+        std::cout << "No drivers in database." << std::endl;
         return;
     }
 
     DriverNode* curr = dateList.getTail();
     int count = 0;
     while(curr && count < n){
-        cout << curr->driver->getName() << " | License: " << 
-        curr->driver->getName() << endl;
+        std::cout << curr->driver->getName() << " | License: " << 
+        curr->driver->getName() << std::endl;
         curr = curr->date_prev;
         count++;
     }
@@ -111,15 +111,15 @@ void DriverDatabase::displayRecent(int n) const{
 
 void DriverDatabase::displayOldest(int n) const{
     if(dateList.isEmpty()){
-        cout << "No driver in database." << endl;
+        std::cout << "No driver in database." << std::endl;
         return;
     }
 
     DriverNode* curr = dateList.getHead();
     int count = 0;
     while(curr && count < n){
-        cout << curr->driver->getName() << " | License: " << 
-        curr->driver->getID() << endl;
+        std::cout << curr->driver->getName() << " | License: " << 
+        curr->driver->getID() << std::endl;
         curr = curr->date_next;
         count++;
     }
