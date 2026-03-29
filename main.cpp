@@ -238,11 +238,21 @@ void addDriver(){
 
     Driver* newDriver = nullptr;
     switch(typeChoice){
-        case 1:  newDriver = new Student      (name, dob, lic, homeAddr, workAddr, FIT); break;
-        case 2:  newDriver = new Government   (name, dob, lic, homeAddr, workAddr, FIT); break;
-        case 3:  newDriver = new SelfEmployed (name, dob, lic, homeAddr, workAddr, FIT); break;
-        case 4:  newDriver = new BusinessOwner(name, dob, lic, homeAddr, workAddr, FIT); break;
-        default: newDriver = new PrivateSector(name, dob, lic, homeAddr, workAddr, FIT); break;
+        case 1:  
+            newDriver = new Student(name, dob, lic, homeAddr, workAddr, FIT); 
+            break;
+        case 2:  
+            newDriver = new Government(name, dob, lic, homeAddr, workAddr, FIT); 
+            break;
+        case 3:  
+            newDriver = new SelfEmployed(name, dob, lic, homeAddr, workAddr, FIT); 
+            break;
+        case 4:     
+            newDriver = new BusinessOwner(name, dob, lic, homeAddr, workAddr, FIT); 
+            break;
+        default: 
+            newDriver = new PrivateSector(name, dob, lic, homeAddr, workAddr, FIT); 
+            break;
     }
 
     //Insertion
