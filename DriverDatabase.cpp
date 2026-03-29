@@ -54,7 +54,7 @@ void DriverDatabase::addDriver(Driver* d, const string& position, const string& 
     }
 
     //Index by driver ID
-    idMap.insert(d->getID(), newNode);
+    idMap.insert(d->getName(), newNode);
     totalDrivers++;
 }
 
@@ -102,12 +102,8 @@ void DriverDatabase::displayRecent(int n) const{
     DriverNode* curr = dateList.getTail();
     int count = 0;
     while(curr && count < n){
-       std::cout << curr->driver->getName()
-                  << " | ID: " << curr->driver->getID()
-                  << " | Type: " << curr->driver->getEmploymentType()
-                  << " | Age Group: " << curr->driver->getAgeCategory()
-                  << " | Experience: " << curr->driver->getExperienceCategory()
-                  << std::endl;
+        std::cout << curr->driver->getName() << " | License: " << 
+        curr->driver->getName() << std::endl;
         curr = curr->date_prev;
         count++;
     }
@@ -122,12 +118,8 @@ void DriverDatabase::displayOldest(int n) const{
     DriverNode* curr = dateList.getHead();
     int count = 0;
     while(curr && count < n){
-         std::cout << curr->driver->getName()
-                  << " | ID: " << curr->driver->getID()
-                  << " | Type: " << curr->driver->getEmploymentType()
-                  << " | Age Group: " << curr->driver->getAgeCategory()
-                  << " | Experience: " << curr->driver->getExperienceCategory()
-                  << std::endl;
+        std::cout << curr->driver->getName() << " | License: " << 
+        curr->driver->getName() << std::endl;
         curr = curr->date_next;
         count++;
     }
@@ -137,3 +129,5 @@ void DriverDatabase::displayOldest(int n) const{
 void DriverDatabase::showInactive() const{inactiveDB.showHistory();}
 
 int DriverDatabase::size() const{return totalDrivers;}
+
+DriverNode* DriverDatabase::getHead() const{return dateList.getHead();}

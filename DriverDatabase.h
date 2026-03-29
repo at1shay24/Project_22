@@ -33,6 +33,7 @@ class DriverDatabase {
         void showInactive() const;
         //Utility
         int size() const;
+        DriverNode* getHead() const;
 };
 
 #endif

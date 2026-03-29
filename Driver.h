@@ -22,17 +22,16 @@ protected:
     MedicalCondition medical; 
 public:
     //Constructor
-        Driver(const string& id, const string& n, Date d, Date lic,
-           Address addr, Address work, MedicalCondition med)
-        : name(n), dob(d), licenseDate(lic), address(addr),
-          workArea(work), medical(med) {}
+    Driver(const string& n, Date d, Date lic, Address addr, Address work, MedicalCondition med)
+        : name(n), dob(d), licenseDate(lic), address(addr), workArea(work), medical(med) {}
     virtual ~Driver() {}
 
     //Accessors
     string getName() const{return name;}
     Date getLicenseDate() const{return licenseDate;}
     Address getAddress() const{return address;}
+    MedicalCondition getMedical() const{return medical;}
     virtual string getEmploymentType() const = 0;
-    int getAge() const {
+    int getAge() const {return dob.getCurrentYear() - dob.getYear();}
 };
 #endif
