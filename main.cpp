@@ -38,13 +38,12 @@ void displayByCategory();
 void exitProgram();
 
 // Classification helpers
-int    computeAge(const Date& dob);
-int    computeExperienceYears(const Date& licDate);
+int computeAge(const Date& dob);
 string getAgeCategory(Driver* d);
 string getExperienceCategory(Driver* d);
 string getMedicalLabel(Driver* d);
 string getWorkType(Driver* d);
-void   printDriverRow(Driver* d);
+void printDriverRow(Driver* d);
 
 int main(){
     cout << "-== Driver Database ==-" << endl;
@@ -281,12 +280,12 @@ void removeDriver(){
     getline(cin, name);
 
     bool removed = activeDB.removeByName(name);
-    if(removed)
+    if(removed){
         cout << "Driver moved to inactive database." << endl;
         cout << "Inactive drivers:" << endl;
         activeDB.showInactive();
-    else
-        cout << "Driver not found." << endl;
+    }
+    else{cout << "Driver not found." << endl;}
 }
 
 //Display most recent and oldest
@@ -316,7 +315,7 @@ string getAgeCategory(Driver* d){
 
 //Experience-based category
 string getExperienceCategory(Driver* d){
-    int yrs = computeExperienceYears(d->getLicenseDate());
+    int yrs = d->getLicenseDate().getCurrentYear() - d->getLicenseDate().getYear();
     if(yrs <= 5)  return "New Driver (0-5 years)";
     if(yrs <= 15) return "Moderately Experienced (6-15 years)";
     return "Highly Experienced (15+ years)";
@@ -343,7 +342,7 @@ string getWorkType(Driver* d){
 
 void printDriverRow(Driver* d){
     int age = d->getAge();
-    int exp = computeExperienceYears(d->getLicenseDate());
+    int exp = d->getLicenseDate().getCurrentYear() - d->getLicenseDate().getYear();
 
     cout << left
          << setw(22) << d->getName()
