@@ -21,13 +21,14 @@ Todd: CountyList and DateList implementation
 #include <iostream>
 #include <sstream>
 #include <fstream>
+using namespace std;
 
  DriverDatabase activeDB;
 
 
  void loadFromFile(const std::string &filename);
  void showMenu();
- void addDriver();
+ void addDriver();2
  void removeDriver();
  void getMostRecent(int n);
  void getOldest(int n);
@@ -40,10 +41,10 @@ int main(){
     int choice = 0;
     do{
         showMenu();
-        if(!(std::cin >> choice)) {
-            std::cin.clear();
-            std::cin.ignore(1000, '\n');
-            std::cout << "Invalid input. Please enter a choice between 1 and 5: ";
+        if(!(cin >> choice)) {
+            cin.clear();
+            cin.ignore(1000, '\n');
+            cout << "Invalid input. Please enter a choice between 1 and 5: ";
             continue;
         }
         switch(choice){
@@ -55,10 +56,10 @@ int main(){
                 break;
             case 3: {
                 int n;
-                std::cout << "Enter the number of most recent drivers to display: ";
-                if(!(std::cin >> n)) {
-                    std::cin.clear();
-                    std::cin.ignore(1000, '\n');
+                cout << "Enter the number of most recent drivers to display: ";
+                if(!(cin >> n)) {
+                    cin.clear();
+                    cin.ignore(1000, '\n');
                 } else {
                     getMostRecent(n);
                 }
@@ -66,10 +67,10 @@ int main(){
             }
             case 4: {
                 int n;
-                std::cout << "Enter the number of oldest drivers to display: ";
-                if(!(std::cin >> n)) {
-                    std::cin.clear();
-                    std::cin.ignore(1000, '\n');
+                cout << "Enter the number of oldest drivers to display: ";
+                if(!(cin >> n)) {
+                    cin.clear();
+                    cin.ignore(1000, '\n');
                 } else {
                     getOldest(n);
                 }
@@ -79,42 +80,43 @@ int main(){
                 exitProgram();
                 break;
             default:
-                std::cout << "Invalid choice. Please try again." << std::endl;
+                cout << "Invalid choice. Please try again." << endl;
+                break;
         }
     }while (choice != 5);
     return 0;
 }
 
 void showMenu(){
-    std::cout << "\n--- City Driver Database Menu ---" << std::endl;
-    std::cout << "1. Add New Driver Record" << std::endl;
-    std::cout << "2. Remove/Migrate Driver" << std::endl;
-    std::cout << "3. View N Most Recent Licenses" << std::endl;
-    std::cout << "4. View N Oldest Licenses" << std::endl;
-    std::cout << "5. Exit System" << std::endl;
-    std::cout << "Selection: ";
+    cout << "\n--- City Driver Database Menu ---" << endl;
+    cout << "1. Add New Driver Record" << endl;
+    cout << "2. Remove/Migrate Driver" << endl;
+    cout << "3. View N Most Recent Licenses" << endl;
+    cout << "4. View N Oldest Licenses" << endl;
+    cout << "5. Exit System" << endl;
+    cout << "Selection: ";
 }
 
-void loadFromFile(const std::string &filename){
+void loadFromFile(const string &filename){
     std::ifstream file(filename);
     if(!file.is_open()){
-        std::cerr << "Error opening file: " << filename << std::endl;
+        cerr << "Error opening file: " << filename << endl;
         return;
     }
 
-    std::string line;
+    string line;
     int count = 0;
-    while(std::getline(file, line) && count < 100){
-        std::stringstream ss(line);
-        std::string name, sDay, sMonth, sYear, lDay, lMonth, lYear, street, city, county, zip, type, medStr;
-         std::getline(ss, name, ',');
-        std::getline(ss, sDay, ','); std::getline(ss, sMonth, ','); std::getline(ss, sYear, ',');
-        std::getline(ss, lDay, ','); std::getline(ss, lMonth, ','); std::getline(ss, lYear, ',');
-        std::getline(ss, street, ','); std::getline(ss, city, ','); std::getline(ss, county, ','); std::getline(ss, zip, ',');
-        std::getline(ss, type, ',');
-        std::getline(ss, medStr, ',');  // medical condition as string
+    while(getline(file, line) && count <= 100){
+        stringstream ss(line);
+        string name, sDay, sMonth, sYear, lDay, lMonth, lYear, street, city, county, zip, type, medStr;
+        getline(ss, name, ',');
+        getline(ss, sDay, ','); getline(ss, sMonth, ','); getline(ss, sYear, ',');
+        getline(ss, lDay, ','); getline(ss, lMonth, ','); getline(ss, lYear, ',');
+        getline(ss, street, ','); getline(ss, city, ','); getline(ss, county, ','); std::getline(ss, zip, ',');
+        getline(ss, type, ',');
+        getline(ss, medStr, ',');  // medical condition as string
 
-        int medInt = std::stoi(medStr);
+        int medInt = stoi(medStr);
         MedicalCondition med;
         switch(medInt){
             case 0: 
