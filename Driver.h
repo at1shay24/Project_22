@@ -13,7 +13,6 @@ enum MedicalCondition { FIT, VISION_IMPAIRED, UPPER_EXTREMITY, LOCOMOTOR };
 class Driver {
 protected:
     string name; 
-    string id;
     Date dob; 
     Date licenseDate; 
     Address address; 
@@ -30,7 +29,6 @@ public:
     virtual ~Driver() {}
 
     //Accessors
-    string getID() const{return id;}
     string getName() const{return name;}
     Date getLicenseDate() const{return licenseDate;}
     Address getAddress() const{return address;}

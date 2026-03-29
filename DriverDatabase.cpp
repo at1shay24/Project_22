@@ -54,7 +54,7 @@ void DriverDatabase::addDriver(Driver* d, const string& position, const string& 
     }
 
     //Index by driver ID
-    idMap.insert(d->getID(), newNode);
+    idMap.insert(d->getName(), newNode);
     totalDrivers++;
 }
 
@@ -103,7 +103,7 @@ void DriverDatabase::displayRecent(int n) const{
     int count = 0;
     while(curr && count < n){
         cout << curr->driver->getName() << " | License: " << 
-        curr->driver->getID() << endl;
+        curr->driver->getName() << endl;
         curr = curr->date_prev;
         count++;
     }
