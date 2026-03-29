@@ -8,21 +8,19 @@
 /*TODO LIST:
 Todd: CountyList and DateList implementation
 */
- #include <iostream>
- #include <string>
- #include <sstream>
- #include <string>
- #include <fstream>
- #include "Date.h"
- #include "Address.h"
- #include "Vector.h"
-#include "Ticket.h"
+#include "Address.h"
+#include "Date.h"
+#include "DriverDatabase.h"
 #include "DriverNode.h"
 #include "Government.h"
+#include "InactiveDatabase.h"
 #include "SelfEmployed.h"
 #include "Student.h"
-#include "DriverDatabase.h"
-#include "InactiveDatabase.h"
+#include "Ticket.h"
+#include "Vector.h"
+#include <iostream>
+#include <sstream>
+#include <fstream>
 
  DriverDatabase activeDB;
  InactiveDatabase inactiveDB;
@@ -119,11 +117,21 @@ void loadFromFile(const std::string &filename){
         int medInt = std::stoi(medStr);
         MedicalCondition med;
         switch(medInt){
-            case 0: med = FIT; break;
-            case 1: med = VISION_IMPAIRED; break;
-            case 2: med = UPPER_EXTREMITY; break;
-            case 3: med = LOCOMOTOR; break;
-            default: med = FIT;
+            case 0: 
+                med = FIT; 
+                break;
+            case 1: 
+                med = VISION_IMPAIRED; 
+                break;
+            case 2: 
+                med = UPPER_EXTREMITY; 
+                break;
+            case 3: 
+                med = LOCOMOTOR; 
+                break;
+            default: 
+                med = FIT;
+                break;
         }
 
         Driver* d = nullptr;

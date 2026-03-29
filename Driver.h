@@ -10,7 +10,8 @@
 enum MedicalCondition { FIT, VISION_IMPAIRED, UPPER_EXTREMITY, LOCOMOTOR };
 class Driver {
 protected:
-    std::string name; 
+    string name; 
+    string id;
     Date dob; 
     Date licenseDate; 
     Address address; 
@@ -19,11 +20,20 @@ protected:
     Vector<Ticket> tickets; 
     MedicalCondition medical; 
 public:
-    Driver(std::string n, Date d, Date lic, Address addr, Address work, MedicalCondition med)
-        : name(n), dob(d), licenseDate(lic), address(addr), workArea(work), medical(med) {}
+    //Constructor
+        Driver(const string& id, const string& n, Date d, Date lic,
+           Address addr, Address work, MedicalCondition med)
+        : id(id), name(n), dob(d), licenseDate(lic), address(addr),
+          workArea(work), medical(med) {}
     virtual ~Driver() {}
-    virtual std::string getEmploymentType() const = 0;
-    std::string getName() const { return name; }
-    Date getLicenseDate() const { return licenseDate; }
+
+    //Accessors
+    string getID() const{return id;}
+    string getName() const{return name;}
+    Date getLicenseDate() const{return licenseDate;}
+    Address getAddress() const{return address;}
+    virtual string getEmploymentType() const = 0;
+    string getName() const { return name; }
+
 };
 #endif

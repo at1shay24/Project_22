@@ -38,8 +38,8 @@ class HashTable{
 
             //Copy Constructor
             HashTable(const HashTable &other) : bucketCount(other.bucketCount), size(0) {
-                buckets = newNode*[bucketCount];
-                for(size+t i = 0; i < bucketCount; i++){
+                buckets = new Node*[bucketCount];
+                for(size_t i = 0; i < bucketCount; i++){
                     buckets[i] = nullptr;
                 }
 

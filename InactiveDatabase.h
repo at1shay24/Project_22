@@ -10,6 +10,12 @@ private:
     Vector<Driver*> storage;
 
 public:
+    //Destructor
+    ~InactiveDatabase(){
+        for (size_t i = 0; i < storage.size(); i++) {
+            delete storage[i];
+        }
+    }
     void addInactive(Driver* d) {
         storage.push_back(d);
     }
