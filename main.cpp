@@ -108,17 +108,14 @@ void loadFromFile(const string &filename){
 
     string line;
     int count = 0;
-    while(getline(file, line) && count < 100){
+    while(getline(file, line) && count <= 100){
         if(line.empty()) continue;
-
         stringstream ss(line);
 
         //Name
         string name;
         getline(ss, name, ',');
-
-        //Date of Birth (d,m,yyyy)
-        string sDay, sMonth, sYear;
+        if(name.empty()) continue;
         getline(ss, sDay, ','); getline(ss, sMonth, ','); getline(ss, sYear, ',');
 
         //License Issue Date (d,m,yyyy)
@@ -138,11 +135,11 @@ void loadFromFile(const string &filename){
         //Driver Type and Medical Condition
         string type, medStr;
         getline(ss, type, ',');
-        getline(ss, medStr, ',');
+        type.erase(remove(type.begin(), type.end(), '\r'), type.end());
+        getline(ss, medStr, ',');  // medical condition as string
+        medStr.erase(remove(medStr.begin(), medStr.end(), '\r'), medStr.end());
 
-        // Skip malformed lines
-        if(name.empty() || type.empty() || medStr.empty()) continue;
-
+        if(medStr.empty()) continue;
         int medInt = stoi(medStr);
         MedicalCondition med;
         switch(medInt){
@@ -159,17 +156,22 @@ void loadFromFile(const string &filename){
         Address workAddr(wStreet, wCity, wCounty, wZip);
 
         Driver* d = nullptr;
-        if     (type == "Student")      d = new Student     (name, dob, lic, homeAddr, workAddr, med);
-        else if(type == "Government")   d = new Government  (name, dob, lic, homeAddr, workAddr, med);
-        else if(type == "SelfEmployed") d = new SelfEmployed(name, dob, lic, homeAddr, workAddr, med);
-        else if(type == "BusinessOwner")d = new BusinessOwner(name, dob, lic, homeAddr, workAddr, med);
-        else if(type == "PrivateSector")d = new PrivateSector(name, dob, lic, homeAddr, workAddr, med);
-        else{
-            cerr << "Unknown driver type \"" << type << "\" on line " << (count + 1) << " — skipping." << endl;
-            continue;
-        }
+        Date dob(std::stoi(sDay), std::stoi(sMonth), std::stoi(sYear));
+        Date lic(std::stoi(lDay), std::stoi(lMonth), std::stoi(lYear));
+        Address addr(street, city, county, zip);
 
-        activeDB.addDriver(d);
+        if(type == "Student") 
+            d = new Student(name, dob, lic, addr, addr, med);
+        else if(type == "Government")
+            d = new Government(name, dob, lic, addr, addr, med);
+        else if(type == "SelfEmployed")
+            d = new SelfEmployed(name, dob, lic, addr, addr, med);
+        else if(type == "BusinessOwner")
+            d = new BusinessOwner(name, dob, lic, addr, addr, med);
+        else if(type == "PrivateSector")
+            d = new PrivateSector(name, dob, lic, addr, addr, med);
+        
+        if(d) activeDB.addDriver(d);
         count++;
     }
     file.close();
