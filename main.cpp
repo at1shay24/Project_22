@@ -38,7 +38,6 @@ void displayByCategory();
 void exitProgram();
 
 // Classification helpers
-int computeAge(const Date& dob);
 string getAgeCategory(Driver* d);
 string getExperienceCategory(Driver* d);
 string getMedicalLabel(Driver* d);
