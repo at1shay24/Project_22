@@ -109,15 +109,20 @@ void loadFromFile(const string &filename){
     string line;
     int count = 0;
     while(getline(file, line) && count <= 100){
+        if(line.empty()) continue;
         stringstream ss(line);
         string name, sDay, sMonth, sYear, lDay, lMonth, lYear, street, city, county, zip, type, medStr;
         getline(ss, name, ',');
+        if(name.empty()) continue;
         getline(ss, sDay, ','); getline(ss, sMonth, ','); getline(ss, sYear, ',');
         getline(ss, lDay, ','); getline(ss, lMonth, ','); getline(ss, lYear, ',');
         getline(ss, street, ','); getline(ss, city, ','); getline(ss, county, ','); std::getline(ss, zip, ',');
         getline(ss, type, ',');
+        type.erase(remove(type.begin(), type.end(), '\r'), type.end());
         getline(ss, medStr, ',');  // medical condition as string
+        medStr.erase(remove(medStr.begin(), medStr.end(), '\r'), medStr.end());
 
+        if(medStr.empty()) continue;
         int medInt = stoi(medStr);
         MedicalCondition med;
         switch(medInt){
@@ -154,7 +159,7 @@ void loadFromFile(const string &filename){
         else if(type == "PrivateSector")
             d = new PrivateSector(name, dob, lic, addr, addr, med);
         
-        activeDB.addDriver(d);
+        if(d) activeDB.addDriver(d);
         count++;
     }
     file.close();
