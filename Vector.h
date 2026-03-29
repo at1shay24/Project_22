@@ -29,7 +29,7 @@ class Vector {
         Vector(const Vector &other) : data(nullptr), sz(0), cap(0) {*this = other;}
         //Assignement Operator
         Vector &operator=(const Vector &other){
-            if(this != other){
+            if(this != &other){
                 clear();
                 if(other.sz > 0){
                     resize(other.sz);

@@ -1,11 +1,12 @@
 #ifndef DRIVER_H
 #define DRIVER_H
 
-#include <string>
-#include "Date.h"
 #include "Address.h"
-#include "Vector.h" 
+#include "Date.h"
 #include "Ticket.h"
+#include "Vector.h" 
+#include <string>
+
 enum MedicalCondition { FIT, VISION_IMPAIRED, UPPER_EXTREMITY, LOCOMOTOR };
 class Driver {
 protected:
