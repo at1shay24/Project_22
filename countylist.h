@@ -13,7 +13,7 @@ private:
 public:
 	countylist() : head(nullptr), tail(nullptr) {}
 	void insertAtHead(DriverNode* county) {
-		DriverNode* newNode = new DriverNode(county);
+		DriverNode* newNode = new DriverNode(*county);
 		if (head == NULL) {
 			head = newNode;
 		}
@@ -24,7 +24,7 @@ public:
 		}
 	}
 	void insertAtTail(DriverNode* county) {
-		DriverNode* newNode = new DriverNode(county);
+		DriverNode* newNode = new DriverNode(*county);
 		if (tail == NULL) {
 			tail = newNode;
 		}
@@ -35,7 +35,7 @@ public:
 		}
 	}
 	void insertAfter(DriverNode* county) {
-		DriverNode* newnode = new DriverNode(county);
+		DriverNode* newnode = new DriverNode(*county);
 		newnode->county_next = county->county_next;
 		county->county_next = newnode;
 
