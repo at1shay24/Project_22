@@ -34,6 +34,24 @@ public:
     Date getLicenseDate() const{return licenseDate;}
     Address getAddress() const{return address;}
     virtual string getEmploymentType() const = 0;
-
+    string getID() const { return id; }
+    int getAge() const {
+    return Date::getCurrentYear() - dob.getYear();
+    }
+    string getAgeCategory() const {
+    int age = getAge();
+    if(age <= 28) return "Youth";
+    else if(age <= 50) return "Middle-aged";
+    else return "Senior";
+    }
+    int getExperienceYears() const {
+    return Date::getCurrentYear() - licenseDate.getYear();
+    }
+    string getExperienceCategory() const {
+    int exp = getExperienceYears();
+    if(exp <= 5) return "New";
+    else if(exp <= 15) return "Moderate";
+    else return "Highly Experienced";
+    }
 };
 #endif
